@@ -10,12 +10,14 @@ const linkList = [
       "pt-BR": "Início",
     },
     link: "/",
+    testId: "first-link-menu",
   },
   {
     label: {
       "en-US": "About",
       "pt-BR": "Sobre",
     },
+    testId: "second-link-menu",
     link: "/about",
   },
   {
@@ -24,17 +26,15 @@ const linkList = [
       "pt-BR": "Projetos",
     },
     link: "/projects",
+    testId: "thurd-link-menu",
   },
 ];
 function Header() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleClass = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
-    <header className="sticky container mx-auto max-width py-2 md:py-10 top-0 z-50 w-full">
+    <header
+      role="reading"
+      className="sticky container mx-auto max-width py-2 md:py-10 top-0 z-50 w-full"
+    >
       <div className="flex items-center justify-between">
         <NavLink
           href="/"
@@ -43,16 +43,20 @@ function Header() {
           {"{ Henrique Souza }"}
         </NavLink>
         <nav className={`text-center flex `}>
-          <ul className="dark:text-light-content font-medium flex gap-2 items-center md:space-x-5 md:mr-10">
-            {React.Children.toArray(
-              linkList.map(({ label, link }) => (
-                <li className="font-light text-base sm:text-lg">
-                  <NavLink href={link} onClick={toggleClass}>
-                    {label["pt-BR"]}
-                  </NavLink>
-                </li>
-              ))
-            )}
+          <ul
+            role="list"
+            className="dark:text-light-content font-medium flex gap-2 items-center md:space-x-5 md:mr-10"
+          >
+            {linkList.map(({ label, link, testId }, index) => (
+              <li
+                key={`${label}-${index}`}
+                className="font-light text-base sm:text-lg"
+              >
+                <NavLink href={link} role="link" data-testid={testId}>
+                  {label["pt-BR"]}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>

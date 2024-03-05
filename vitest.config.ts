@@ -6,6 +6,12 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: "jsdom",
+    coverage: {
+      provider: "istanbul",
+      reporter: ["text", "json", "html", "html-spa"],
+      include: ["__tests__/**", "src/**"],
+      exclude: ["coverage/**", "node_modules/**", ".next/**"],
+    },
   },
   resolve: {
     alias: {
